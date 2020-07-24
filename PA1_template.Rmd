@@ -58,7 +58,7 @@ na <- sum(is.na(activity$steps))
 cat("Total number of missing values in the dataset: ",na)
 ```
 
-###Replace Missing Values with the Average for that interval
+### Replace Missing Values with the Average for that interval
 ```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
 ##B is average steps per interval to merge with the original 'Activity' table
 c <- data.frame(b)

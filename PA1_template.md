@@ -79,7 +79,7 @@ cat("Total number of missing values in the dataset: ",na)
 
 Total number of missing values in the dataset:  2304
 
-###Replace Missing Values with the Average for that interval
+### Replace Missing Values with the Average for that interval
 
 ```r
 ##B is average steps per interval to merge with the original 'Activity' table

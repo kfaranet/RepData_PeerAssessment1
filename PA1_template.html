@@ -413,7 +413,8 @@ cat(&quot;Max Interval (x-axis value): &quot;,xmi)</code></pre>
 na &lt;- sum(is.na(activity$steps))
 cat(&quot;Total number of missing values in the dataset: &quot;,na)</code></pre>
 <p>Total number of missing values in the dataset: 2304</p>
-<p>###Replace Missing Values with the Average for that interval</p>
+<div id="replace-missing-values-with-the-average-for-that-interval" class="section level3">
+<h3>Replace Missing Values with the Average for that interval</h3>
 <pre class="r"><code>##B is average steps per interval to merge with the original &#39;Activity&#39; table
 c &lt;- data.frame(b)
 addmean &lt;- merge(activity, c, by.x=&quot;interval&quot;, by.y=&quot;interval&quot;)
@@ -434,6 +435,7 @@ cat(&quot;Mean: &quot;,format(z2, big.mark=&quot;,&quot;))  </code></pre>
 cat(&quot;Median: &quot;,format(y2, big.mark=&quot;,&quot;))</code></pre>
 <p>Median: 10,766.19<br />
 The mean and median are now the same value.</p>
+</div>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level2">
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
