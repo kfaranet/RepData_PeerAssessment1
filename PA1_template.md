@@ -7,17 +7,17 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+
+```r
 library(dplyr)
 library(ggplot2)
-##These are commented to prevent downloading the data and unzipping it every time you run the code.
-##download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", destfile = "activity.zip")
 ##unzip("activity.zip")
 activity <- read.csv("activity.csv", colClasses = c("integer","Date","integer"))
 ```
 
 ## What is mean total number of steps taken per day?
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+
+```r
 ##Group by date and summarize the days using the SUM function, then plot in histogram
 a <- activity %>% group_by(date) %>% summarize(steps=sum(steps), na.rm = TRUE)
 ggplot(a, aes(x=steps))+
@@ -27,16 +27,27 @@ ggplot(a, aes(x=steps))+
       ylab("# Days")
 ```
 
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+
+```r
 ##Print the mean/median steps by day (using the 'a' data frame)
 z <- mean(a$steps, na.rm=T)
 cat("Mean: ",format(z, big.mark=","))  
+```
+
+Mean:  10,766.19
+
+```r
 y <- median(a$steps, na.rm=T)
 cat("Median: ",format(y, big.mark=","))
 ```
 
+Median:  10,765
+
 ## What is the average daily activity pattern?
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE}
+
+```r
 ##'b' shows the average steps by interval for all days. This will be used later on.
 b <- activity %>% group_by(interval) %>% summarize(steps=mean(steps, na.rm=TRUE))
 ggplot(b, aes(x=interval, y=steps))+
@@ -44,22 +55,31 @@ ggplot(b, aes(x=interval, y=steps))+
       ggtitle("Average Number of Steps Taken by Interval")
 ```
 
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+
+```r
 ##Find which interval across all days has the maximum number of steps.
 maxinterval <- b[which.max(b$steps),]
 xmi <- maxinterval[[1]]
 cat("Max Interval (x-axis value): ",xmi)
 ```
 
+Max Interval (x-axis value):  835
+
 ## Imputing missing values
-```{r echo=TRUE, results="asis"}
+
+```r
 ##Count number of rows containing missing (NA) step values
 na <- sum(is.na(activity$steps))
 cat("Total number of missing values in the dataset: ",na)
 ```
 
+Total number of missing values in the dataset:  2304
+
 ###Replace Missing Values with the Average for that interval
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
+
+```r
 ##B is average steps per interval to merge with the original 'Activity' table
 c <- data.frame(b)
 addmean <- merge(activity, c, by.x="interval", by.y="interval")
@@ -73,19 +93,30 @@ ggplot(replace_steps_group, aes(x=replace_steps))+
       ylab("# Days")
 ```
 
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
+```r
 ##Calculate and print mean/median
 z2 <- mean(replace_steps_group$replace_steps, na.rm=T)
 cat("Mean: ",format(z2, big.mark=","))  
+```
+
+Mean:  10,766.19
+
+```r
 y2 <- median(replace_steps_group$replace_steps, na.rm=T)
 cat("Median: ",format(y2, big.mark=","))
-```  
+```
+
+Median:  10,766.19
 \
 The mean and median are now the same value.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r echo=TRUE, warning=FALSE, error=FALSE, message=FALSE, results="asis"}
+
+```r
 ##Mutate the replace_steps table to include a factor variable for weekday vs. weekend
 replace_steps_wkday <- replace_steps %>% mutate(weekday=weekdays(as.Date(date)), weekday_factor=factor(weekday %in% c("Saturday","Sunday"), levels=c(TRUE,FALSE), labels=c("Weekend","Weekday")))
 ##Average the number of steps per interval over weekday/weekend
@@ -98,4 +129,6 @@ ggplot(data=wkday_average, aes(x=interval,y=steps))+
       xlab("Interval")+
       ylab("Steps")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
