@@ -11,6 +11,8 @@ output:
 ```r
 library(dplyr)
 library(ggplot2)
+##These are commented to prevent downloading the data and unzipping it every time you run the code.
+##download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip", destfile = "activity.zip")
 ##unzip("activity.zip")
 activity <- read.csv("activity.csv", colClasses = c("integer","Date","integer"))
 ```
