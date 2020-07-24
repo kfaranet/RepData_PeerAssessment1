@@ -415,7 +415,8 @@ cat(&quot;Total number of missing values in the dataset: &quot;,na)</code></pre>
 <p>Total number of missing values in the dataset: 2304</p>
 <div id="replace-missing-values-with-the-average-for-that-interval" class="section level3">
 <h3>Replace Missing Values with the Average for that interval</h3>
-<pre class="r"><code>##B is average steps per interval to merge with the original &#39;Activity&#39; table
+<pre class="r"><code>##The strategy to replace NA values is to use the mean of that time interval across all other days.
+##B is average steps per interval to merge with the original &#39;Activity&#39; table
 c &lt;- data.frame(b)
 addmean &lt;- merge(activity, c, by.x=&quot;interval&quot;, by.y=&quot;interval&quot;)
 ##Now that the table are merged, need an if statement to replace the NA values with the mean of that interval.

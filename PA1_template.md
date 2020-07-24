@@ -82,6 +82,7 @@ Total number of missing values in the dataset:  2304
 ### Replace Missing Values with the Average for that interval
 
 ```r
+##The strategy to replace NA values is to use the mean of that time interval across all other days.
 ##B is average steps per interval to merge with the original 'Activity' table
 c <- data.frame(b)
 addmean <- merge(activity, c, by.x="interval", by.y="interval")
